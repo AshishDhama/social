@@ -18,7 +18,7 @@ const commentsApi = createApi({
             body:data.comment,
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
@@ -30,7 +30,7 @@ const commentsApi = createApi({
             method: "GET",
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },

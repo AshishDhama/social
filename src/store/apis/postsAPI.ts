@@ -10,27 +10,32 @@ const postsApi = createApi({
   }),
   endpoints(builder) {
     return {
-      removePost: builder.mutation<Post, {userId: Pick<User, 'id'>, postId: Pick<Post, 'id'>}>({
+      removePost: builder.mutation<Post, {userId: number, postId: Pick<Post, 'id'>}>({
         query: (data) => {
           return {
             url: `/users/${data.userId}/posts/${data.postId}}`,
             method: "DELETE",
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
       }),
-      addPost: builder.mutation<Post, {userId: Pick<User, 'id'>, post: Omit<Post, 'id'>}>({
+      addPost: builder.mutation<Post, {user: User, post: Omit<Post, 'id'>}>({
         query: (data) => {
           return {
-            url: `/users/${data.userId}/posts`,
+            url: `/users/${data.user.id}/posts`,
             method: "POST",
-            body:data.post,
+            body:{
+              title: data.post.title,
+              body: data.post.body,
+              user: data.user,
+              user_id: data.user.id
+            },
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
@@ -42,7 +47,7 @@ const postsApi = createApi({
             method: "GET",
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
@@ -54,7 +59,7 @@ const postsApi = createApi({
             method: "GET",
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
@@ -66,7 +71,7 @@ const postsApi = createApi({
             method: "GET",
             headers:{
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
+              Authorization: `Bearer ${AuthToken}`
             }
           };
         },
