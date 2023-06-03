@@ -8,6 +8,7 @@ import Dashboard from "./pages/dashboard/dashboard";
 
 import "./App.scss";
 import UserListPage from "./pages/user-list/user-list";
+import PostDetails from "./pages/post-details/post-details";
 
 const About = React.lazy(() => import("./pages/about/about"));
 const UserDetails = React.lazy(() =>  import("./pages/user-details/user-details"));
@@ -37,6 +38,11 @@ const router = createBrowserRouter([
       {
         path: "users/:userId",
         element: <UserDetails />,
+        errorElement: <NoMatch />,
+      },
+      {
+        path: "posts/:postId",
+        element: <PostDetails />,
         errorElement: <NoMatch />,
       },
       {

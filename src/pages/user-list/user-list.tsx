@@ -1,4 +1,4 @@
-import { User } from "../../types/user.type";
+import { User } from "../../models/user.model";
 import { UserCard } from "../../components/user-card";
 
 import styles from "./user-list.module.scss";

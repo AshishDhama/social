@@ -1,18 +1,19 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { APIBaseURL, AuthToken } from "../../constants";
 import { User } from "../../models/user.model";
+import { Post } from "../../models/post.model";
 
-const usersApi = createApi({
-  reducerPath: "users",
+const postsApi = createApi({
+  reducerPath: "posts",
   baseQuery: fetchBaseQuery({
     baseUrl: APIBaseURL,
   }),
   endpoints(builder) {
     return {
-      removeUser: builder.mutation({
-        query: (user: User) => {
+      removePost: builder.mutation<Post, {userId: Pick<User, 'id'>, postId: Pick<Post, 'id'>}>({
+        query: (data) => {
           return {
-            url: `/users/${user.id}`,
+            url: `/users/${data.userId}/posts/${data.postId}}`,
             method: "DELETE",
             headers:{
               "Content-Type": "application/json",
@@ -21,17 +22,12 @@ const usersApi = createApi({
           };
         },
       }),
-      addUser: builder.mutation({
-        query: (user: User) => {
+      addPost: builder.mutation<Post, {userId: Pick<User, 'id'>, post: Omit<Post, 'id'>}>({
+        query: (data) => {
           return {
-            url: "/users",
+            url: `/users/${data.userId}/posts`,
             method: "POST",
-            body: {
-              email: user.email,
-              name: user.name,
-              status: user.status,
-              gender: user.gender
-            },
+            body:data.post,
             headers:{
               "Content-Type": "application/json",
               Authorization: `bearer ${AuthToken}`
@@ -39,10 +35,10 @@ const usersApi = createApi({
           };
         },
       }),
-      fetchUser: builder.query<User, number>({
-        query: (userId) => {
+      fetchPost: builder.query<Post, number>({
+        query: (postId) => {
           return {
-            url: `/users/${userId}`,
+            url: `/posts/${postId}`,
             method: "GET",
             headers:{
               "Content-Type": "application/json",
@@ -51,10 +47,22 @@ const usersApi = createApi({
           };
         },
       }),
-      fetchUsers: builder.query<User[], void>({
+      fetchUserPosts: builder.query<Post[], number>({
+        query: (userId) => {
+          return {
+            url: `/users/${userId}/posts`,
+            method: "GET",
+            headers:{
+              "Content-Type": "application/json",
+              Authorization: `bearer ${AuthToken}`
+            }
+          };
+        },
+      }),
+      fetchAllPosts: builder.query<Post[], void>({
         query: () => {
           return {
-            url: "/users",
+            url: "/posts",
             method: "GET",
             headers:{
               "Content-Type": "application/json",
@@ -68,9 +76,10 @@ const usersApi = createApi({
 });
 
 export const {
-  useFetchUserQuery,
-  useFetchUsersQuery,
-  useAddUserMutation,
-  useRemoveUserMutation,
-} = usersApi;
-export { usersApi };
+  useFetchAllPostsQuery,
+  useFetchPostQuery,
+  useFetchUserPostsQuery,
+  useAddPostMutation,
+  useRemovePostMutation,
+} = postsApi;
+export { postsApi };

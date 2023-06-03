@@ -1,10 +1,10 @@
 import { useLayoutEffect, useRef } from "react";
-import { User } from "../../types/user.type";
+import { User } from "../../models/user.model";
 import { randomColor } from "../../utils";
 import styles from "./user-card.module.scss";
 type Props = {
   user: User;
-  onClick: (user: User) => void;
+  onClick?: (user: User) => void;
 };
 
 export function UserCard({ user, onClick }: Props) {
@@ -19,15 +19,15 @@ export function UserCard({ user, onClick }: Props) {
     if (iconRef.current) {
       iconRef.current.style.backgroundColor = color;
     }
-  }, []);
+  }, [color]);
 
   function handleClick() {
-    onClick(user);
-  };
+    onClick?.(user);
+  }
 
   return (
     <div onClick={handleClick} className={styles["user-card"]} key={user.id}>
-      <span ref={iconRef} className={styles["user-card__icon"]} >
+      <span ref={iconRef} className={styles["user-card__icon"]}>
         {user.name.charAt(0)}
         <span className={statusClass} />
       </span>
