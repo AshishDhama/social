@@ -10,12 +10,17 @@ const commentsApi = createApi({
   }),
   endpoints(builder) {
     return {
-      addComment: builder.mutation<Post, {postId: Pick<Post, 'id'>, comment: Omit<Comment, 'id'>}>({
+      addComment: builder.mutation<Post, {post: Post, comment: Omit<Comment, 'id'>}>({
         query: (data) => {
           return {
-            url: `/posts/${data.postId}/comeents`,
+            url: `/posts/${data.post.id}/comments`,
             method: "POST",
-            body:data.comment,
+            body: { 
+              name: data.comment.name,
+              body: data.comment.body,
+              email: data.comment.email,
+              post: data.post,
+            },
             headers:{
               "Content-Type": "application/json",
               Authorization: `Bearer ${AuthToken}`
@@ -23,10 +28,10 @@ const commentsApi = createApi({
           };
         },
       }),
-      fetchPostComments: builder.query<Comment[], Post>({
-        query: (Post) => {
+      fetchPostComments: builder.query<Comment[], number>({
+        query: (postId) => {
           return {
-            url: `/posts/${Post.id}/comments`,
+            url: `/posts/${postId}/comments`,
             method: "GET",
             headers:{
               "Content-Type": "application/json",
