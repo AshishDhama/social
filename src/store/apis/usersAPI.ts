@@ -26,9 +26,6 @@ const usersApi = createApi({
           return {
             url: "/users",
             method: "POST",
-            mode: "cors",
-            cache: "no-cache",
-            credentials: "same-origin",
             body: {
               email: user.email,
               name: user.name,
