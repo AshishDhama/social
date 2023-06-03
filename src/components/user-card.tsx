@@ -21,7 +21,7 @@ export function UserCard({ user, onClick }: Props) {
     onClick?.(user);
   }
   return (
-    <div className="flex items-center gap-x-6 shadow-md p-8 flex-col" onClick={handleClick}>
+    <div className="flex justify-start items-center gap-6 shadow-md p-8 rounded-md flex-col" onClick={handleClick}>
       <span ref={iconRef} className="h-16 w-16 flex items-center justify-center text-white font-black relative rounded-lg">
       {user.name.charAt(0)}
         <span
@@ -32,7 +32,7 @@ export function UserCard({ user, onClick }: Props) {
         <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
           {user.name}
         </h3>
-        <p className="text-sm font-semibold leading-6 text-indigo-600">
+        <p className="text-sm break-all font-semibold leading-6 text-indigo-600">
           {user.email}
         </p>
       </div>

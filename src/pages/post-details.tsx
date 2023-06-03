@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import Skeleton from "../components/skeleton";
 import { useFetchPostCommentsQuery, useFetchPostQuery } from "../store";
 import { PostCard } from "../components/post-card";
+import { CommentCard } from "../components/comment-card";
 
 export default function PostDetails() {
   const { postId } = useParams<{ postId: string }>();
@@ -33,7 +34,7 @@ export default function PostDetails() {
     commentsContent = <div>Error fetching photos...</div>;
   } else if (commentsData) {
     commentsContent = commentsData.map((comment) => (
-      <PostCard key={comment.id} post={comment} />
+      <CommentCard key={comment.id} comment={comment} />
     ));
   }
 

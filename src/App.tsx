@@ -4,12 +4,13 @@ import {
   createBrowserRouter,
   redirect,
 } from "react-router-dom";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/home";
 import UserListPage from "./pages/user-list";
 import PostDetails from "./pages/post-details";
 
 const About = React.lazy(() => import("./pages/about"));
 const UserDetails = React.lazy(() =>  import("./pages/user-details"));
+const PostList = React.lazy(() =>  import("./pages/post-list"));
 const NoMatch = React.lazy(() => import("./pages/not-found"));
 
 const loader = async () => {
@@ -36,6 +37,11 @@ export const RoutesData = [
       {
         path: "users/:userId",
         element: <UserDetails />,
+        errorElement: <NoMatch />,
+      },
+      {
+        path: "posts",
+        element: <PostList />,
         errorElement: <NoMatch />,
       },
       {

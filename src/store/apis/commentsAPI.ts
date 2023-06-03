@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { APIBaseURL, AuthToken } from "../../constants";
-import { User } from "../../models/user.model";
 import { Post } from "../../models/post.model";
+import { Comment } from "../../models/comment.model";
 
 const commentsApi = createApi({
   reducerPath: "comments",

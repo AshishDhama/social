@@ -14,28 +14,31 @@ const usersApi = createApi({
           return {
             url: `/users/${user.id}`,
             method: "DELETE",
-            headers:{
+            headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
-            }
+              Authorization: `bearer ${AuthToken}`,
+            },
           };
         },
       }),
       addUser: builder.mutation({
-        query: (user: User) => {
+        query: (user: Omit<User, "id">) => {
           return {
             url: "/users",
             method: "POST",
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "same-origin",
             body: {
               email: user.email,
               name: user.name,
               status: user.status,
-              gender: user.gender
+              gender: user.gender,
             },
-            headers:{
+            headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
-            }
+              Authorization: `bearer ${AuthToken}`,
+            },
           };
         },
       }),
@@ -44,10 +47,10 @@ const usersApi = createApi({
           return {
             url: `/users/${userId}`,
             method: "GET",
-            headers:{
+            headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
-            }
+              Authorization: `bearer ${AuthToken}`,
+            },
           };
         },
       }),
@@ -56,10 +59,10 @@ const usersApi = createApi({
           return {
             url: "/users",
             method: "GET",
-            headers:{
+            headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`
-            }
+              Authorization: `bearer ${AuthToken}`,
+            },
           };
         },
       }),
