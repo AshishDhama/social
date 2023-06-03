@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { APIBaseURL } from "../../constants";
+import { APIBaseURL, AuthToken } from "../../constants";
 import { User } from "../../types/user.type";
 
 const usersApi = createApi({
@@ -14,6 +14,10 @@ const usersApi = createApi({
           return {
             url: `/users/${user.id}`,
             method: "DELETE",
+            headers:{
+              "Content-Type": "application/json",
+              Authorization: `bearer ${AuthToken}`
+            }
           };
         },
       }),
@@ -28,6 +32,10 @@ const usersApi = createApi({
               status: user.status,
               gender: user.gender
             },
+            headers:{
+              "Content-Type": "application/json",
+              Authorization: `bearer ${AuthToken}`
+            }
           };
         },
       }),
@@ -36,6 +44,10 @@ const usersApi = createApi({
           return {
             url: "/users",
             method: "GET",
+            headers:{
+              "Content-Type": "application/json",
+              Authorization: `bearer ${AuthToken}`
+            }
           };
         },
       }),

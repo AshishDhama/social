@@ -11,7 +11,7 @@ export default function UserListPage() {
   const { data, error, isFetching } = useFetchUsersQuery();
 
   function handleClick(user: User) {
-    navigate(`/user/${user.id}`);
+    navigate(`/users/${user.id}`);
   }
 
   let content: JSX.Element | JSX.Element[] | null = null;
