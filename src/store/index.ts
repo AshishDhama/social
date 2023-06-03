@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { usersApi } from './usersAPI';
+import { usersApi } from './apis/usersAPI';
 import { postsApi } from './apis/postsAPI';
 import { commentsApi } from './apis/commentsAPI';
 
@@ -25,7 +25,7 @@ export {
   useFetchUsersQuery,
   useAddUserMutation,
   useRemoveUserMutation,
-} from './usersAPI';
+} from './apis/usersAPI';
 
 export {
   useFetchAllPostsQuery,
