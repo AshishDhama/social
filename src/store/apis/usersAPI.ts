@@ -16,7 +16,7 @@ const usersApi = createApi({
             method: "DELETE",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`,
+              Authorization: `Bearer ${AuthToken}`,
             },
           };
         },
@@ -34,7 +34,7 @@ const usersApi = createApi({
             },
             headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`,
+              Authorization: `Bearer ${AuthToken}`,
             },
           };
         },
@@ -46,7 +46,7 @@ const usersApi = createApi({
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`,
+              Authorization: `Bearer ${AuthToken}`,
             },
           };
         },
@@ -58,7 +58,7 @@ const usersApi = createApi({
             method: "GET",
             headers: {
               "Content-Type": "application/json",
-              Authorization: `bearer ${AuthToken}`,
+              Authorization: `Bearer ${AuthToken}`,
             },
           };
         },
