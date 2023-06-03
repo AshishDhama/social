@@ -4,21 +4,19 @@ import {
   createBrowserRouter,
   redirect,
 } from "react-router-dom";
-import Dashboard from "./pages/dashboard/dashboard";
+import Dashboard from "./pages/dashboard";
+import UserListPage from "./pages/user-list";
+import PostDetails from "./pages/post-details";
 
-import "./App.scss";
-import UserListPage from "./pages/user-list/user-list";
-import PostDetails from "./pages/post-details/post-details";
-
-const About = React.lazy(() => import("./pages/about/about"));
-const UserDetails = React.lazy(() =>  import("./pages/user-details/user-details"));
-const NoMatch = React.lazy(() => import("./pages/not-found/not-found"));
+const About = React.lazy(() => import("./pages/about"));
+const UserDetails = React.lazy(() =>  import("./pages/user-details"));
+const NoMatch = React.lazy(() => import("./pages/not-found"));
 
 const loader = async () => {
   return redirect("/users");
 };
 
-const router = createBrowserRouter([
+export const RoutesData = [
   {
     path: "/",
     element: <Dashboard />,
@@ -51,7 +49,9 @@ const router = createBrowserRouter([
       }
     ],
   },
-]);
+]
+
+const router = createBrowserRouter(RoutesData);
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => router.dispose());

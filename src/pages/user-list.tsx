@@ -1,10 +1,9 @@
-import { User } from "../../models/user.model";
-import { UserCard } from "../../components/user-card";
+import { User } from "../models/user.model";
+import { UserCard } from "../components/user-card";
 
-import styles from "./user-list.module.scss";
 import { useNavigate } from "react-router-dom";
-import { useFetchUsersQuery } from "../../store";
-import Skeleton from "../../components/skeleton/skeleton";
+import { useFetchUsersQuery } from "../store";
+import Skeleton from "../components/skeleton";
 
 export default function UserListPage() {
   const navigate = useNavigate();
@@ -24,5 +23,6 @@ export default function UserListPage() {
       return <UserCard key={user.id} user={user} onClick={handleClick} />;
     });
   }
-  return <div className={styles["user-list"]}>{content}</div>;
+
+  return <div className="grid grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] gap-8">{content}</div>;
 }

@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useFetchUserPostsQuery, useFetchUserQuery } from "../../store";
-import Skeleton from "../../components/skeleton/skeleton";
-import { UserCard } from "../../components/user-card";
-import { PostCard } from "../../components/post-card";
-import { Post } from "../../models/post.model";
+import { useFetchUserPostsQuery, useFetchUserQuery } from "../store";
+import Skeleton from "../components/skeleton";
+import { UserCard } from "../components/user-card";
+import { PostCard } from "../components/post-card";
+import { Post } from "../models/post.model";
 
 export default function UserDetails() {
   const navigate = useNavigate();
@@ -44,7 +44,7 @@ export default function UserDetails() {
     navigate(`/posts/${post.id}`);
   }
   return (
-    <div>
+    <div >
       {content}
       {postsContent}
     </div>
