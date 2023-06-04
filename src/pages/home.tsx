@@ -7,7 +7,7 @@ export default function Dashboard() {
   const postsSelected = currentPath === "/posts" || currentPath.split('/').includes('posts');
   const classes = 'hover:text-blue-500 cursor-pointer transition-colors duration-200 ease-in-out font-semibold'
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col h-full">
       <nav className="flex justify-between items-center bg-gray-200 text-gray-500 p-4">
         <ul className="flex gap-x-4">
           <li className={ classes + (usersSelected ? ' text-blue-500' : ' text-gray-500')}>

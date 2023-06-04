@@ -3,7 +3,6 @@ import {
   useAddPostMutation,
   useFetchUserPostsQuery,
   useFetchUserQuery,
-  useRemovePostMutation,
 } from "../store";
 import Spinner from "../components/spinner";
 import { UserCard } from "../components/user-card";
@@ -25,7 +24,6 @@ export default function UserDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams<{ userId: string }>() as UserParams;
-  const [removePost] = useRemovePostMutation();
 
   const {
     data: user,
@@ -36,7 +34,6 @@ export default function UserDetails() {
     data: posts,
     error: postsError,
     isFetching: isFetchingPosts,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   } = useFetchUserPostsQuery(+userId);
 
   let content: JSX.Element | null = null;
@@ -59,7 +56,6 @@ export default function UserDetails() {
         key={post.id}
         post={post}
         onClick={handlePostClick}
-        onDelete={handlePostDelete}
       />
     ));
   }
@@ -85,10 +81,6 @@ export default function UserDetails() {
       createPost({ user: userData, post });
       setIsModalOpen(false);
     }
-  }
-
-  function handlePostDelete(post: Post) {
-    removePost(post);
   }
 
   return (

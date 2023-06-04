@@ -4,24 +4,22 @@ import {
   useAddCommentMutation,
   useFetchPostCommentsQuery,
   useFetchPostQuery,
+  useFetchUserQuery,
   useFetchUsersQuery,
 } from "../store";
-import { PostCard } from "../components/post-card";
 import { CommentCard } from "../components/comment-card";
-import CreateButton from "../components/create-button";
-import Modal from "../components/modal";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Comment } from "../models/comment.model";
 import CreateCommentForm from "../components/create-comment-form";
 import { User } from "../models/user.model";
 import { Post } from "../models/post.model";
+import { PostDetailsCard } from "../components/post-details-card";
 interface PostParams {
   postId: string
 }
 export default function PostDetails() {
   const formRef = useRef<HTMLFormElement>(null);
   const [createComment] = useAddCommentMutation();
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const { postId } = useParams<{ postId: string }>() as PostParams;
   const { data: users} = useFetchUsersQuery();
 
@@ -36,6 +34,7 @@ export default function PostDetails() {
     error: commentsError,
     isFetching: isFetchingComments,
   } = useFetchPostCommentsQuery(+postId);
+  const {data:author}= useFetchUserQuery(post?.user_id as number, {skip: !post?.user_id});
 
   let postContent: JSX.Element | null = null;
   if (isFetchingPost) {
@@ -43,7 +42,7 @@ export default function PostDetails() {
   } else if (postError) {
     postContent = <div>Error fetching photos...</div>;
   } else if (post) {
-    postContent = <PostCard key={post.id} post={post} />;
+    postContent = <PostDetailsCard key={post.id} post={post} author={author as User}/>;
   }
 
   let commentsContent: JSX.Element | JSX.Element[] | null = null;
@@ -57,11 +56,7 @@ export default function PostDetails() {
     ));
   }
 
-  function handleCreate() {
-    setIsModalOpen(true);
-  }
-
-  function handleCreatePost() {
+  function handleCreateComment() {
     const form = formRef.current;
     if (form) {
       const formData = new FormData(form);
@@ -75,29 +70,21 @@ export default function PostDetails() {
       };
       const postData = post as Post;
       createComment({ post: postData, comment });
-      setIsModalOpen(false);
     }
   }
   const usersOptions = users as User[];
 
   return (
-    <div className="flex flex-row p-8 gap-8">
-      <div className="flex flex-col gap-8">
-        <div className="flex items-center justify-center gap-x-6 bg-gray-50 border-dashed border-2 border-gray-500 rounded-md p-8 flex-col">
-          <CreateButton text="Comment" onClick={handleCreate} />
+    <div className="flex flex-col overflow-hidden gap-4">
+      <div className="flex flex-col items-center overflow-y-scroll">
+        {postContent}
+        <div className="flex flex-col w-full gap-4 max-w-[1440px] pt-8">
+        {commentsContent}
         </div>
       </div>
-      <div className="w-full">
-        {postContent}
-        {commentsContent}
+      <div className="flex justify-center px-8 w-full">
+      {usersOptions && <CreateCommentForm formRef={formRef} users={usersOptions} onSubmit={handleCreateComment} />}
       </div>
-      <Modal
-        title="Create Comment"
-        body={<CreateCommentForm users={usersOptions} formRef={formRef} />}
-        isOpen={isModalOpen}
-        onCancel={() => setIsModalOpen(false)}
-        onConfirm={handleCreatePost}
-      />
     </div>
   );
 }

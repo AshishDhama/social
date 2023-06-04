@@ -11,13 +11,13 @@ export function CommentCard({ comment, onClick }: Props) {
   }
   return (
     <div
-      className="flex flex-col gap-4 bg-gray-100 rounded-md p-4 border-2 border-gray-200"
+      className="flex w-full flex-col gap-4 bg-gray-100 rounded-md p-4 border-2 border-gray-200"
       onClick={handleClick}
     >
       <div className="flex flex-col mt-2">
         <div className="flex flex-col text-xs text-gray-900">
           <span className="font-bold">Comment:</span>
-          <span className="text-lg">{comment.body}</span>
+          <span className="text-sm">{comment.body}</span>
         </div>
       </div>
       <div className="flex flex-row items-center justify-between">

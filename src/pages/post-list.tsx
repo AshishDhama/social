@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useFetchAllPostsQuery, useRemovePostMutation } from "../store";
+import { useFetchAllPostsQuery} from "../store";
 import Spinner from "../components/spinner";
 import CreateButton from "../components/create-button";
 import { PostCard } from "../components/post-card";
@@ -8,14 +8,9 @@ import { Post } from "../models/post.model";
 export default function UserListPage() {
   const navigate = useNavigate();
   const { data, error, isFetching } = useFetchAllPostsQuery();
-  const [removePost] = useRemovePostMutation();
 
   function handleClick(post: Post) {
     navigate(`/posts/${post.id}`);
-  }
-
-  function handleDelete(post: Post) {
-    removePost(post);
   }
 
   let content: JSX.Element | JSX.Element[] | null = null;
@@ -25,7 +20,7 @@ export default function UserListPage() {
     content = <div>Error fetching photos...</div>;
   } else if (data) {
     content = data.map((post: Post) => {
-      return <PostCard key={post.id} post={post} onClick={handleClick} onDelete={handleDelete} />;
+      return <PostCard key={post.id} post={post} onClick={handleClick} />;
     });
   }
 

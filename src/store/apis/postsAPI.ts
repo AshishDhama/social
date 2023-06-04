@@ -13,7 +13,7 @@ const postsApi = createApi({
       removePost: builder.mutation<Post, Post>({
         query: (post) => {
           return {
-            url: `/users/${post.user_id}/posts/${post.id}}`,
+            url: `/users/${post.user_id}/posts/${post.id}`,
             method: "DELETE",
             headers:{
               "Content-Type": "application/json",
