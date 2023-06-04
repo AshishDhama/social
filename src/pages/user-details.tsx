@@ -46,7 +46,7 @@ export default function UserDetails() {
   }
 
   let postsContent: JSX.Element | JSX.Element[] | null = null;
-  if (isFetchingPosts) {
+  if (isFetchingPosts && !posts) {
     postsContent = <Spinner />;
   } else if (postsError) {
     postsContent = <div>Error fetching photos...</div>;
@@ -92,7 +92,7 @@ export default function UserDetails() {
             <CreateButton text="Post" onClick={handleCreate} />
           </div>
         </div>
-        <div className="w-full grid grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] gap-8">
+        <div className="w-full h-full grid grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] gap-8">
           {postsContent}
         </div>
       </div>

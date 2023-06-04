@@ -41,7 +41,7 @@ export function UserCard({ user, onClick, onDelete }: Props) {
           className={`h-4 w-4 absolute bottom-0 right-0 rounded-full inline-flex items-center justify-center ring-2 ring-white ${statusClass}`}
         ></span>
       </span>
-      <div>
+      <div className="flex-grow">
         <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">
           {user.name}
         </h3>

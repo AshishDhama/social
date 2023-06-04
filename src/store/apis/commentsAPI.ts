@@ -8,6 +8,7 @@ const commentsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: APIBaseURL,
   }),
+  tagTypes: ['Comment'],
   endpoints(builder) {
     return {
       addComment: builder.mutation<Post, {post: Post, comment: Omit<Comment, 'id'>}>({
@@ -27,6 +28,7 @@ const commentsApi = createApi({
             }
           };
         },
+        invalidatesTags: ['Comment'],
       }),
       fetchPostComments: builder.query<Comment[], number>({
         query: (postId) => {
@@ -39,6 +41,7 @@ const commentsApi = createApi({
             }
           };
         },
+        providesTags: ['Comment'],
       }),
     };
   },
