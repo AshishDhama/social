@@ -1,5 +1,11 @@
-# Live Demo of [Social](https://social-nv179tc3d-ashishdhama.vercel.app/)
-Tech Stack: 
+# Live Demo of [Social](https://social-git-main-ashishdhama.vercel.app)
+
+## Vidoes
+https://github.com/AshishDhama/social/assets/16203333/1239a4e6-f8ba-471e-b693-365266e77703
+
+
+
+## Tech Stack: 
 - [ReactJS](https://reactjs.org)
 - [Vite](https://vitejs.dev)
 - [TypeScript](https://www.typescriptlang.org)
