@@ -7,6 +7,7 @@ const usersApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: APIBaseURL,
   }),
+  tagTypes: ['User'],
   endpoints(builder) {
     return {
       removeUser: builder.mutation({
@@ -20,6 +21,7 @@ const usersApi = createApi({
             },
           };
         },
+        invalidatesTags: ['User'],
       }),
       addUser: builder.mutation({
         query: (user: Omit<User, "id">) => {
@@ -38,6 +40,7 @@ const usersApi = createApi({
             },
           };
         },
+        invalidatesTags: ['User'],
       }),
       fetchUser: builder.query<User, number>({
         query: (userId) => {
@@ -50,6 +53,7 @@ const usersApi = createApi({
             },
           };
         },
+        providesTags: ['User'],
       }),
       fetchUsers: builder.query<User[], void>({
         query: () => {
@@ -62,6 +66,7 @@ const usersApi = createApi({
             },
           };
         },
+        providesTags: ['User'],
       }),
     };
   },

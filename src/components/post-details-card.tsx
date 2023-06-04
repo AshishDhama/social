@@ -1,6 +1,7 @@
 import { UserIcon } from "@heroicons/react/20/solid";
 import { Post } from "../models/post.model";
 import { User } from "../models/user.model";
+import { Link } from "react-router-dom";
 
 type Props = {
   post: Post;
@@ -21,7 +22,14 @@ export function PostDetailsCard({ post, author, onDelete }: Props) {
         </p>
       </div>
       <div className="flex justify-between items-center w-full g-8">
-        {author && <h3 className="flex justify-center items-center gap-2 text-sm font-bold"><UserIcon className="w-4 h-4"/> {author.name}</h3>}
+        {author && (
+          <Link to={`/users/${author.id}`}>
+            <button className="flex justify-center items-center gap-2 text-sm font-bold text-indigo-500 hover:bg-indigo-700 hover:text-white py-2 px-4 rounded">
+              <UserIcon className="w-4 h-4" />
+              {author.name}
+            </button>
+          </Link>
+        )}
         {onDelete && (
           <button
             onClick={handleDelete}

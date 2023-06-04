@@ -8,6 +8,7 @@ const postsApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: APIBaseURL,
   }),
+  tagTypes: ['Post'],
   endpoints(builder) {
     return {
       removePost: builder.mutation<Post, Post>({
@@ -39,6 +40,7 @@ const postsApi = createApi({
             }
           };
         },
+        invalidatesTags: ['Post'],
       }),
       fetchPost: builder.query<Post, number>({
         query: (postId) => {
@@ -63,6 +65,7 @@ const postsApi = createApi({
             }
           };
         },
+        providesTags: ['Post'],
       }),
       fetchAllPosts: builder.query<Post[], void>({
         query: () => {
@@ -75,6 +78,7 @@ const postsApi = createApi({
             }
           };
         },
+        providesTags: ['Post'],
       }),
     };
   },
