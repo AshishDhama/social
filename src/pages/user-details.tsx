@@ -13,27 +13,31 @@ import CreateButton from "../components/create-button";
 import { useRef, useState } from "react";
 import Modal from "../components/modal";
 import CreatePostForm from "../components/create-post-form";
+import { User } from "../models/user.model";
 
+
+interface UserParams {
+  userId: string
+}
 export default function UserDetails() {
   const formRef = useRef<HTMLFormElement>(null);
   const [createPost] = useAddPostMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
-  const { userId } = useParams<{ userId: string }>();
+  const { userId } = useParams<{ userId: string }>() as UserParams;
   const [removePost] = useRemovePostMutation();
 
   const {
     data: user,
     error: userError,
     isFetching: isFetchingUser,
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  } = useFetchUserQuery(+userId!);
+  } = useFetchUserQuery(+userId);
   const {
     data: posts,
     error: postsError,
     isFetching: isFetchingPosts,
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  } = useFetchUserPostsQuery(+userId!);
+  } = useFetchUserPostsQuery(+userId);
 
   let content: JSX.Element | null = null;
   if (isFetchingUser) {
@@ -77,7 +81,8 @@ export default function UserDetails() {
         body: formData.get("body") as string,
         user_id: +userId,
       };
-      createPost({ user, post });
+      const userData = user as User;
+      createPost({ user: userData, post });
       setIsModalOpen(false);
     }
   }

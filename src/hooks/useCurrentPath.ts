@@ -1,11 +1,7 @@
-import { matchRoutes, useLocation } from "react-router-dom"
-import { RoutesData } from "../App"
-
+import { useLocation } from "react-router-dom"
 const useCurrentPath = () => {
     const location = useLocation()
-    const [{ route }] = matchRoutes(RoutesData, location)
-  
-    return route.path
+    return location.pathname
   }
 
   export default useCurrentPath;

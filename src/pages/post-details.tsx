@@ -14,12 +14,15 @@ import { useRef, useState } from "react";
 import { Comment } from "../models/comment.model";
 import CreateCommentForm from "../components/create-comment-form";
 import { User } from "../models/user.model";
-
+import { Post } from "../models/post.model";
+interface PostParams {
+  postId: string
+}
 export default function PostDetails() {
   const formRef = useRef<HTMLFormElement>(null);
   const [createComment] = useAddCommentMutation();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { postId } = useParams<{ postId: string }>();
+  const { postId } = useParams<{ postId: string }>() as PostParams;
   const { data: users} = useFetchUsersQuery();
 
   console.log(postId);
@@ -70,10 +73,12 @@ export default function PostDetails() {
         email: user.email,
         post_id: +postId,
       };
-      createComment({ post, comment });
+      const postData = post as Post;
+      createComment({ post: postData, comment });
       setIsModalOpen(false);
     }
   }
+  const usersOptions = users as User[];
 
   return (
     <div className="flex flex-row p-8 gap-8">
@@ -88,7 +93,7 @@ export default function PostDetails() {
       </div>
       <Modal
         title="Create Comment"
-        body={<CreateCommentForm users={users} formRef={formRef} />}
+        body={<CreateCommentForm users={usersOptions} formRef={formRef} />}
         isOpen={isModalOpen}
         onCancel={() => setIsModalOpen(false)}
         onConfirm={handleCreatePost}
