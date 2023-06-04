@@ -1,10 +1,8 @@
 import { Link, Outlet } from "react-router-dom";
-import classNames from "classnames";
 import useCurrentPath from "../hooks/useCurrentPath";
 
 export default function Dashboard() {
   const currentPath = useCurrentPath();
-  console.log(currentPath.split('/'));
   const usersSelected = currentPath === "/users" || currentPath === '/' || currentPath.split('/').includes('users') ;
   const postsSelected = currentPath === "/posts" || currentPath.split('/').includes('posts');
   const classes = 'hover:text-blue-500 cursor-pointer transition-colors duration-200 ease-in-out font-semibold'
