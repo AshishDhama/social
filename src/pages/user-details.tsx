@@ -3,8 +3,9 @@ import {
   useAddPostMutation,
   useFetchUserPostsQuery,
   useFetchUserQuery,
+  useRemovePostMutation,
 } from "../store";
-import Skeleton from "../components/skeleton";
+import Spinner from "../components/spinner";
 import { UserCard } from "../components/user-card";
 import { PostCard } from "../components/post-card";
 import { Post } from "../models/post.model";
@@ -19,6 +20,7 @@ export default function UserDetails() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { userId } = useParams<{ userId: string }>();
+  const [removePost] = useRemovePostMutation();
 
   const {
     data: user,
@@ -35,7 +37,7 @@ export default function UserDetails() {
 
   let content: JSX.Element | null = null;
   if (isFetchingUser) {
-    content = <Skeleton className="h-8 w-8" times={4} />;
+    content = <Spinner />;
   } else if (userError) {
     content = <div>Error fetching photos...</div>;
   } else if (user) {
@@ -44,12 +46,17 @@ export default function UserDetails() {
 
   let postsContent: JSX.Element | JSX.Element[] | null = null;
   if (isFetchingPosts) {
-    postsContent = <Skeleton className="h-8 w-8" times={4} />;
+    postsContent = <Spinner />;
   } else if (postsError) {
     postsContent = <div>Error fetching photos...</div>;
   } else if (posts) {
     postsContent = posts.map((post) => (
-      <PostCard key={post.id} post={post} onClick={handlePostClick} />
+      <PostCard
+        key={post.id}
+        post={post}
+        onClick={handlePostClick}
+        onDelete={handlePostDelete}
+      />
     ));
   }
 
@@ -75,15 +82,23 @@ export default function UserDetails() {
     }
   }
 
+  function handlePostDelete(post: Post) {
+    removePost(post);
+  }
+
   return (
-    <div className="flex flex-row p-8 gap-8">
-      <div className="flex flex-col gap-8">
-        {content}
-        <div className="flex items-center justify-center gap-x-6 bg-gray-50 border-dashed border-2 border-gray-500 rounded-md p-8 flex-col">
-          <CreateButton text="Post" onClick={handleCreate} />
+    <>
+      <div className="flex flex-row p-8 gap-8">
+        <div className="flex flex-col gap-8">
+          {content}
+          <div className="flex items-center justify-center gap-x-6 bg-gray-50 border-dashed border-2 border-gray-500 rounded-md p-8 flex-col">
+            <CreateButton text="Post" onClick={handleCreate} />
+          </div>
+        </div>
+        <div className="w-full grid grid-cols-[repeat(auto-fill,_minmax(16rem,_1fr))] gap-8">
+          {postsContent}
         </div>
       </div>
-      <div>{postsContent}</div>
       <Modal
         title="Create Post"
         body={<CreatePostForm formRef={formRef} />}
@@ -91,6 +106,6 @@ export default function UserDetails() {
         onCancel={() => setIsModalOpen(false)}
         onConfirm={handleCreatePost}
       />
-    </div>
+    </>
   );
 }

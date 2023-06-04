@@ -3,7 +3,7 @@ import { UserCard } from "../components/user-card";
 
 import { useNavigate } from "react-router-dom";
 import { useAddUserMutation, useFetchUsersQuery, useRemoveUserMutation } from "../store";
-import Skeleton from "../components/skeleton";
+import Spinner from "../components/spinner";
 import CreateButton from "../components/create-button";
 import Modal from "../components/modal";
 import { useRef, useState } from "react";
@@ -13,7 +13,7 @@ export default function UserListPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const formRef = useRef<HTMLFormElement>(null) ;
   const [createUser] = useAddUserMutation();
-  const [delteUser] = useRemoveUserMutation();
+  const [deleteUser] = useRemoveUserMutation();
 
   const navigate = useNavigate();
   const { data, error, isFetching } = useFetchUsersQuery();
@@ -23,12 +23,12 @@ export default function UserListPage() {
   }
 
   function handleDelete(user: User) {
-    delteUser(user);
+    deleteUser(user);
   }
 
   let content: JSX.Element | JSX.Element[] | null = null;
   if (isFetching) {
-    content = <Skeleton className="h-8 w-8" times={4} />;
+    content = <Spinner />;
   } else if (error) {
     content = <div>Error fetching photos...</div>;
   } else if (data) {

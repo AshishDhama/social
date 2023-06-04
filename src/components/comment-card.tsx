@@ -1,4 +1,3 @@
-import { UserCircleIcon } from "@heroicons/react/24/solid";
 import { Comment } from "../models/comment.model";
 import { EnvelopeIcon, UserIcon } from "@heroicons/react/20/solid";
 
